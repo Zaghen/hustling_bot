@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS INSTALLA(
+    username VARCHAR(32) REFERENCES USER(username),
+    nome  VARCHAR(100) REFERENCES MODS(nome),
+    PRIMARY KEY(username,nome)
+);

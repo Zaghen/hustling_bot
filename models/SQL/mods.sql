@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS mods(
+    nome VARCHAR(100) PRIMARY KEY ,
+    versione TEXT NOT NULL ,
+    tipo TEXT NOT NULL,
+    link TEXT NOT NULL
+
+);
