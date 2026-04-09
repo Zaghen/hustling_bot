@@ -184,6 +184,30 @@ async def show_users(ctx):
     print(utenti)
     lista_nomi = "\n".join(u[0] for u in utenti)
     await ctx.send(f"**Utenti nel database:**\n{lista_nomi}")
-    
 
+@bot.command()
+async def associa(ctx,mod_name):
+    user_id=ctx.author.id
+    user_name=ctx.author.name
+    cursor.execute("SELECT * FROM INSTALLA")
+    relazioni=cursor.fetchall()
+    for relazione in relazioni:
+        print(relazione[1])
+        if relazione[0]==str(user_id) and relazione[1]==mod_name:
+            await ctx.send(f"la {mod_name} e' gia associata a {user_name}")
+            return
+    cursor.execute(f"SELECT nome FROM MODS WHERE nome = '{mod_name}'")
+    mod=cursor.fetchone()
+    if mod:
+        cursor.execute( 
+            f"""
+            INSERT INTO INSTALLA (username,nome) values ('{user_id}','{mod_name}')
+            """
+        )
+        await ctx.send(f"abbiamo associa a {user_name} {mod_name}")
+        return
+    else:
+        await ctx.send("la mod non esiste")
+      
+            
 bot.run(token=TOKEN,log_handler=handler,log_level=logging.DEBUG)
